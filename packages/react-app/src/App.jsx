@@ -23,7 +23,7 @@ import {
   useUserProvider,
 } from "./hooks";
 // import Hints from "./Hints";
-import { ExampleUI, Hints, Subgraph } from "./views";
+import { AboneroUI, ExampleUI, Hints, Subgraph } from "./views";
 /*
     Welcome to 🏗 scaffold-eth !
 
@@ -146,10 +146,10 @@ function App(props) {
   ]);
 
   // keep track of a variable from the contract in the local React state:
-  const purpose = useContractReader(readContracts, "YourContract", "purpose");
+  const purpose = useContractReader(readContracts, "Abonero", "purpose");
 
   // 📟 Listen for broadcast events
-  const setPurposeEvents = useEventListener(readContracts, "YourContract", "SetPurpose", localProvider, 1);
+  const setPurposeEvents = useEventListener(readContracts, "Abonero", "SetPurpose", localProvider, 1);
 
   /*
   const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
@@ -322,6 +322,16 @@ function App(props) {
               ExampleUI
             </Link>
           </Menu.Item>
+          <Menu.Item key="/aboneroui">
+            <Link
+              onClick={() => {
+                setRoute("/aboneroui");
+              }}
+              to="/aboneroui"
+            >
+              AboneroUI
+            </Link>
+          </Menu.Item>
           <Menu.Item key="/mainnetdai">
             <Link
               onClick={() => {
@@ -353,7 +363,7 @@ function App(props) {
             */}
 
             <Contract
-              name="YourContract"
+              name="Abonero"
               signer={userProvider.getSigner()}
               provider={localProvider}
               address={address}
@@ -402,6 +412,20 @@ function App(props) {
               readContracts={readContracts}
               purpose={purpose}
               setPurposeEvents={setPurposeEvents}
+            />
+          </Route>
+          <Route path="/aboneroui">
+            <AboneroUI
+              address={address}
+              userProvider={userProvider}
+              mainnetProvider={mainnetProvider}
+              localProvider={localProvider}
+              yourLocalBalance={yourLocalBalance}
+              price={price}
+              tx={tx}
+              useContractReader={useContractReader}
+              writeContracts={writeContracts}
+              readContracts={readContracts}
             />
           </Route>
           <Route path="/mainnetdai">
